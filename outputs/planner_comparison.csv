@@ -1,0 +1,16 @@
+budget_crew_days,strategy,locations_visited,crew_days_used,open_incidents_cleared,severity_backlog_cleared,open_complaints_cleared,exposure_weighted_backlog,share_of_all_open_incidents
+30,FixFirst,12.0,29.8,74.0,181.0,53.0,322.4,2.5%
+30,Worst severity first,11.0,29.4,83.0,194.0,32.0,300.1,2.9%
+30,Most open complaints first,14.0,30.0,43.0,88.0,122.0,139.3,1.5%
+30,Most past incidents first,16.0,29.8,66.0,124.0,53.0,204.7,2.3%
+30,Random (mean of 200),19.3,29.8,53.9,103.1,66.4,156.2,1.9%
+60,FixFirst,27.0,60.0,145.0,359.0,102.0,630.8,5.0%
+60,Worst severity first,24.0,60.0,165.0,379.0,67.0,598.8,5.7%
+60,Most open complaints first,28.0,59.9,91.0,175.0,232.0,286.5,3.1%
+60,Most past incidents first,30.0,59.7,140.0,262.0,97.0,404.6,4.8%
+60,Random (mean of 200),38.4,59.8,109.2,209.5,133.0,317.8,3.8%
+120,FixFirst,55.0,120.0,288.0,692.0,205.0,1166.9,9.9%
+120,Worst severity first,49.0,119.9,309.0,699.0,182.0,1129.6,10.6%
+120,Most open complaints first,57.0,119.8,191.0,375.0,435.0,597.0,6.6%
+120,Most past incidents first,61.0,119.6,275.0,536.0,203.0,831.4,9.5%
+120,Random (mean of 200),76.3,119.8,220.3,422.7,265.9,641.1,7.6%

@@ -1,0 +1,43 @@
+{
+  "dispersion_ratio": 1.058058058058058,
+  "dispersion_p": 0.09885228227364404,
+  "glm_lrt": 18.985897814896134,
+  "glm_lrt_df": 33,
+  "glm_lrt_p": 0.9756289254815119,
+  "eb_prior_cv_h1": 0.08383045336932352,
+  "eb_prior_cv_full": 0.07573723653522814,
+  "validation": [
+    {
+      "model": "Global mean (baseline 1)",
+      "mean_poisson_deviance": 1.093,
+      "MAE": 1.8409
+    },
+    {
+      "model": "Raw H1 history (baseline 2)",
+      "mean_poisson_deviance": 2.5173,
+      "MAE": 2.5149
+    },
+    {
+      "model": "Poisson GLM on attributes (M-A)",
+      "mean_poisson_deviance": 1.1506,
+      "MAE": 1.8999
+    },
+    {
+      "model": "Empirical-Bayes (M-B)",
+      "mean_poisson_deviance": 1.0934,
+      "MAE": 1.8448
+    }
+  ],
+  "top50_coverage": {
+    "Empirical-Bayes rank": 0.05196350654502182,
+    "Raw H1 count rank": 0.05196350654502182,
+    "GLM rank": 0.04760015866719556
+  },
+  "random_band_95": [
+    0.044025188417294726,
+    0.05612852042840143
+  ],
+  "median_rank_interval_width": 884.0499999999997,
+  "n_p_top50_ge_0.5": 0,
+  "n_above_mean_ge_0.95": 0
+}

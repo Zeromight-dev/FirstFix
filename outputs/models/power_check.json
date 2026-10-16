@@ -1,0 +1,47 @@
+{
+  "rows": [
+    {
+      "true spread sigma": 0.0,
+      "dispersion test detects (p<0.01)": "2%",
+      "EB prior CV (est.)": 0.037,
+      "EB deviance gain vs global mean": "-0.02%",
+      "top-50 coverage (random 5.0%)": "5.02%",
+      "locations confidently top-50": 0.0
+    },
+    {
+      "true spread sigma": 0.1,
+      "dispersion test detects (p<0.01)": "55%",
+      "EB prior CV (est.)": 0.105,
+      "EB deviance gain vs global mean": "0.05%",
+      "top-50 coverage (random 5.0%)": "5.27%",
+      "locations confidently top-50": 0.2
+    },
+    {
+      "true spread sigma": 0.2,
+      "dispersion test detects (p<0.01)": "100%",
+      "EB prior CV (est.)": 0.194,
+      "EB deviance gain vs global mean": "2.47%",
+      "top-50 coverage (random 5.0%)": "6.02%",
+      "locations confidently top-50": 2.8
+    },
+    {
+      "true spread sigma": 0.3,
+      "dispersion test detects (p<0.01)": "100%",
+      "EB prior CV (est.)": 0.296,
+      "EB deviance gain vs global mean": "9.56%",
+      "top-50 coverage (random 5.0%)": "7.32%",
+      "locations confidently top-50": 14.1
+    },
+    {
+      "true spread sigma": 0.5,
+      "dispersion test detects (p<0.01)": "100%",
+      "EB prior CV (est.)": 0.509,
+      "EB deviance gain vs global mean": "30.90%",
+      "top-50 coverage (random 5.0%)": "10.87%",
+      "locations confidently top-50": 32.9
+    }
+  ],
+  "summary": "In simulated cities the pipeline flags heterogeneity reliably once the true spread of location rates reaches about sigma = 0.2, and it ranks hot spots usefully only at larger spreads. The real data's estimated spread is ~0.08 (95% upper bound ~0.12). So the null result is a property of the (synthetic) data, not a blind spot of the method. Applied to a real city with genuine hot spots, the same pipeline would find them.",
+  "sigma_hat": 0.0761958385071377,
+  "sigma_upper95": 0.11861331638084585
+}

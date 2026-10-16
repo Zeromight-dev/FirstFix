@@ -1,0 +1,71 @@
+Locations: 1000   incidents: 10000   mean/location/yr: 10.00
+Exposure years  H1=0.496  H2=0.504  full=1.000
+
+==============================================================================
+0. IS THERE ANY LOCATION-TO-LOCATION VARIATION BEYOND PURE CHANCE?
+==============================================================================
+Pearson dispersion statistic = 1057.0 on 999 df  (ratio 1.058; Poisson null = 1.0)
+p-value (H0: all locations share one rate, counts are Poisson) = 0.0989
+Interpretation: no convincing evidence that locations differ beyond random chance
+
+==============================================================================
+M-A. POISSON GLM (IRLS, from scratch): do location attributes explain incident counts?
+==============================================================================
+Predictors in model: 33   LRT statistic vs intercept-only = 19.0   p = 0.9756
+Expected LRT under pure noise ~ 33 (its degrees of freedom)
+
+GLM top coefficients (standardized, fitted on H1):
+zone_ZONE_10                  0.031
+pedestrian_activity_Medium    0.029
+zone_ZONE_09                 -0.028
+road_type_Highway             0.026
+log_density                  -0.023
+zone_ZONE_05                  0.022
+zone_ZONE_06                 -0.021
+lat                           0.020
+
+==============================================================================
+M-B. EMPIRICAL-BAYES GAMMA-POISSON (prior fitted by ML, from scratch)
+==============================================================================
+Prior fitted on H1 only: shape a=142.3, rate b=14.2  -> prior mean 10.00/yr, prior coefficient of variation 0.084
+(CV near 0 means the data says: all locations have essentially the same underlying rate)
+
+==============================================================================
+VALIDATION: fit on Jan-Jun, predict Jul-Dec incident counts per location
+==============================================================================
+                          model  mean_poisson_deviance    MAE
+       Global mean (baseline 1)                 1.0930 1.8409
+    Raw H1 history (baseline 2)                 2.5173 2.5149
+Poisson GLM on attributes (M-A)                 1.1506 1.8999
+          Empirical-Bayes (M-B)                 1.0934 1.8448
+Lower is better. If EB ~ global mean << raw history, shrinkage has correctly learned that history is mostly noise.
+
+Share of Jul-Dec incidents located in the top-50 locations ranked from Jan-Jun data (random expectation 5.0%):
+  Empirical-Bayes rank   5.20%   [inside random band; 95% of random picks fall in 4.40% - 5.61%]
+  Raw H1 count rank      5.20%   [inside random band; 95% of random picks fall in 4.40% - 5.61%]
+  GLM rank               4.76%   [inside random band; 95% of random picks fall in 4.40% - 5.61%]
+
+==============================================================================
+FINAL MODEL (fit on full year) + RANK UNCERTAINTY
+==============================================================================
+Prior on full year: a=174.3, b=17.4, prior mean 10.00/yr, prior CV 0.076
+Top 10 by EB rate with uncertainty:
+location_id    zone  incidents_2025  raw_rate_per_yr  eb_rate_per_yr  rate_ci5  rate_ci95  rank_5pct  rank_median  rank_95pct  p_top50  p_above_citywide_mean
+      L0362 ZONE_05              23             23.0           10.71      9.51      11.94          8          178         737    0.219                  0.823
+      L0521 ZONE_15              21             21.0           10.60      9.42      11.82         11          229         781    0.170                  0.786
+      L0734 ZONE_18              20             20.0           10.54      9.33      11.79         12          244         811    0.160                  0.759
+      L0802 ZONE_14              19             19.0           10.49      9.28      11.72         15          255         830    0.154                  0.736
+      L0358 ZONE_07              19             19.0           10.49      9.30      11.76         13          266         823    0.145                  0.737
+      L0688 ZONE_09              19             19.0           10.49      9.31      11.75         14          266         819    0.145                  0.746
+      L0965 ZONE_20              19             19.0           10.49      9.26      11.77         14          268         838    0.151                  0.733
+      L0795 ZONE_10              18             18.0           10.43      9.24      11.76         14          272         841    0.142                  0.715
+      L0952 ZONE_08              18             18.0           10.43      9.22      11.69         17          283         846    0.129                  0.711
+      L0136 ZONE_08              18             18.0           10.43      9.22      11.71         15          284         847    0.133                  0.714
+
+Median rank-interval width (5th-95th pct) across all locations: 884 out of 1000 places
+Locations with P(in top-50) >= 0.5 : 0
+Locations with P(in top-50) >= 0.8 : 0
+Locations with P(rate above citywide mean) >= 0.95 : 0   (chance alone gives ~0)
+Interpretation: if few/no locations are confidently distinguishable, the honest recommendation is to treat most places as a statistical tie and break ties with exposure, open backlog and travel bundling, not past counts.
+
+DONE. Saved eb_report.txt, eb_summary.json, eb_location_table.csv, eb_model.joblib

@@ -1,0 +1,63 @@
+
+==============================================================================
+A. ASSOCIATION SCAN (every target vs every candidate predictor)
+==============================================================================
+Tests run: 208.  Bonferroni threshold for 'real' = p < 2.40e-04.  Expect ~10 false hits at p<0.05 by chance.
+
+Associations passing Bonferroni: 0
+NONE - the data looks like noise at this level.
+
+Next 20 strongest (may be chance):
+    table         target                  predictor             test  effect        p
+ incident    reported_by             road_condition chi2 (Cramers V)  0.0272 0.008237
+ incident      log_res_h             road_condition  kruskal (eps^2)  0.0012 0.009024
+ location mean_log_res_h             road_condition  kruskal (eps^2)  0.0097 0.020926
+ incident    reported_by              incident_type chi2 (Cramers V)  0.0302 0.025888
+ incident  incident_type                reported_by chi2 (Cramers V)  0.0302 0.025888
+ incident     resolved_c                reported_by chi2 (Cramers V)  0.0290 0.038451
+ incident       severity        pedestrian_activity chi2 (Cramers V)  0.0253 0.045834
+ incident    reported_by                      month chi2 (Cramers V)  0.0399 0.046500
+ incident       severity                      month chi2 (Cramers V)  0.0398 0.047952
+complaint       category population_density_per_km2  kruskal (eps^2)  0.0014 0.051862
+ incident      log_res_h                  longitude       spearman r -0.0186 0.062292
+ incident     resolved_c population_density_per_km2  kruskal (eps^2)  0.0003 0.064991
+ location          com_n population_density_per_km2       spearman r -0.0579 0.067269
+ incident    reported_by                       zone chi2 (Cramers V)  0.0494 0.071556
+ incident      log_res_h                   latitude       spearman r  0.0172 0.084976
+ incident    reported_by                  road_type chi2 (Cramers V)  0.0248 0.103587
+ incident     resolved_c                   severity chi2 (Cramers V)  0.0246 0.108481
+ location   unresolved_n population_density_per_km2       spearman r  0.0492 0.120057
+ location mean_log_res_h                   latitude       spearman r  0.0489 0.122620
+ location   unresolved_n                near_school  kruskal (eps^2)  0.0024 0.123343
+
+==============================================================================
+B. ML PROBES (time-based: train Jan-Aug, test Sep-Dec; HistGradientBoosting vs naive baseline)
+==============================================================================
+                             target   metric          model  baseline logloss_model logloss_base                             note
+incident: resolved (open vs closed)      AUC          0.495       0.5        0.6038       0.5985                    pos rate 0.71
+     incident: injured (injuries>0)      AUC          0.516       0.5        0.5207       0.5184                    pos rate 0.21
+                 incident: severity accuracy          0.361     0.382        1.2329       1.2097                        4 classes
+            incident: incident_type accuracy          0.173     0.163        1.8199       1.7915                        6 classes
+              incident: reported_by accuracy          0.499     0.501        1.2539       1.2376                        4 classes
+     incident: log resolution hours R2 (MAE) -0.003 (0.579) 0 (0.575)                            lower MAE than baseline = signal
+                  complaint: status accuracy          0.402      0.41        1.5253       1.4879                        5 classes
+       complaint: priority_reported accuracy          0.564     0.567        1.0015       0.9814                        3 classes
+  complaint: log days_to_resolution R2 (MAE) -0.015 (0.497) 0 (0.493)                            lower MAE than baseline = signal
+
+How to read: AUC ~0.50 / accuracy ~ majority / R2 ~ 0 / model logloss ~ baseline logloss = NO usable signal.
+
+==============================================================================
+C. LOCATION-LEVEL FORECAST PROBE (28-day counts, train cutoffs <= Jun, test cutoffs >= Aug)
+==============================================================================
+train rows 9000, test rows 9000 (28-day purge gap respected: train targets end before test cutoffs)
+Mean Poisson deviance  model : 1.1349
+Mean Poisson deviance  global mean baseline: 1.0976
+Mean Poisson deviance  trailing-90d rate baseline: 2.9194
+MAE model / global mean / trailing-90d: 0.7262 0.71 0.7791
+
+Share of next-28-day incidents captured by top-50 locations (random pick would be 5.0%):
+  model        : 5.472%
+  most past inc: 4.824%
+  random       : 5.574%
+
+DONE. Saved: C:\Users\Aaditya Manoj\Desktop\Project\FirstFix\outputs\eda\signal_scan.txt
